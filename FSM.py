@@ -1,9 +1,6 @@
 import random
 
-#number_of_nodes_global = 18 # initial number of total nodes (not all have to be active)
-
 class FSM:
-	#number_of_nodes = number_of_nodes_global
 	number_of_nodes = 18 # this value was found from a related paper
 	def __init__(self, game_action_list, node_list=None):
 		self.node_list = []
@@ -13,6 +10,7 @@ class FSM:
 			self.node_list = node_list
 		self.fitness_score = 0
 		self.current_state = 0 # index in the nodelist that represents the current state
+		self.payoff_list = []
 
 
 	def generateNodes(self, game_action_list):
@@ -47,6 +45,3 @@ class Node:
 			transition_dict[action] = random.randint(1, FSM.number_of_nodes) - 1
 		return transition_dict
 
-
-	# def generateAction(game_name):
-	# 	return random.choice(game_name.action_list)
