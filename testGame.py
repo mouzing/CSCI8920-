@@ -1,47 +1,48 @@
 import random
 
 class testGame:
-	default_action = "c"
-	opponent_last_action = "c" # all implemented opponents start with cooperate by default
-	game_name = "Test Game"
-	action_list = ["c", "d"]
-	payoff = {"cc": (3, 3),
-			"dd": (1, 1),
-			"cd": (1, 5),
-			"dc": (5, 1)}
-	player_count = 5 
+	def __init__(self):
+		self.default_action = "c"
+		self.opponent_last_action = "c" # all implemented opponents start with cooperate by default
+		self.game_name = "Test Game"
+		self.action_list = ["c", "d"]
+		self.payoff = {"cc": (3, 3),
+					"dd": (1, 1),
+					"cd": (1, 5),
+					"dc": (5, 1)}
+		self.player_count = 5 
 
-	def get_action(opponent_num):
+	def get_payoff(self, p1_action, p2_action):
+		return self.payoff[p1_action + p2_action][0]
+
+	def get_action(self, opponent_num):
 		if opponent_num == 0:
-			return testGame.always_cooperate()
+			return self.always_cooperate()
 		elif opponent_num == 1:
-			return testGame.always_defect()
+			return self.always_defect()
 		elif opponent_num == 2:
-			return testGame.random_action()
+			return self.random_action()
 		elif opponent_num == 3:
-			return testGame.tit_for_tat(testGame.opponent_last_action)
+			return self.tit_for_tat(self.opponent_last_action)
 		elif opponent_num == 4:
-			return testGame.ms_copycat(testGame.opponent_last_action)
+			return self.ms_copycat(self.opponent_last_action)
 
-	def always_cooperate():
+	def always_cooperate(self):
 		return "c"
 
-	def always_defect():
+	def always_defect(self):
 		return "d"
 
-	def random_action():
+	def random_action(self):
 		if random.uniform(0,1) > .5:
 			return "c"
 		else:
 			return "d"
 
-	def tit_for_tat(opponent_last_action):
-		if opponent_last_action == "c":
-			return "c"
-		else:
-			return "d"
+	def tit_for_tat(self, opponent_last_action):
+		return opponent_last_action
 
-	def ms_copycat(opponent_last_action):
+	def ms_copycat(self, opponent_last_action):
 		# mixed strategy favoring copy-cat with 80/20 or 20/80
 		chance = random.uniform(0, 1)
 		if opponent_last_action == "c":
